@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는  패키지 포함한 mapper(interface)  이름으로 설정 한다.    -->
+<mapper namespace="com.ssafy.enjoytrip.plan.model.dao.PlanCommentDao">
+	
+    <select id="searchMyComment" parameterType="RequestSearchPlanDetailDto" resultType="ResponseCommentDto">
+        select cid, pid, userId, content, isShow, createdTime
+        from plan_comment
+        where pid = #{pid} and userId = #{userId}
+        order by cid desc
+    </select>
+    <select id="searchOtherComment"		parameterType="RequestSearchPlanDetailDto"	resultType="ResponseCommentDto">
+        select cid, pid, userId, content, isShow, createdTime
+        from plan_comment
+        where content_id = #{contentId} and pid != #{pid} and userId != #{userId} and isShow = true
+        order by cid desc
+     </select>
+
+	<insert id="insert"	parameterType="RequestInsertPlanCommentDto">
+        insert into plan_comment (pid, userId, content, isShow, content_id)
+        values(#{pid},#{userId},#{content},#{isShow},#{contentId})
+    </insert>
+    <update id="update" parameterType="RequestUpdatePlanCommentDto">
+    	update plan_comment set content = #{content}, isShow=#{isShow}
+    	where cid=#{cid}
+    </update>
+    <delete id="delete" parameterType="int">
+        delete from plan_comment where cid=#{cid}
+    </delete>
+    
+
+</mapper>

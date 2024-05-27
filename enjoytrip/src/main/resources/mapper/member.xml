@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는  패키지 포함한 mapper(interface)  이름으로 설정 한다.    -->
+<mapper namespace="com.ssafy.enjoytrip.member.model.dao.MemberDao">
+
+
+	<select id="search"			parameterType="string"	resultType="Member">
+		select userId, name, email, region, isHost
+		from member where userId =#{userId}
+	</select>
+	<insert id="insert"			parameterType="Member">
+		insert into member (userId, name, email, region, isHost)
+		values(#{userId},#{name},#{email},#{region}, #{isHost})
+	</insert>
+	<select id="searchAll" resultType="Member">
+		select userId, name, email, region, isHost
+		from member;
+	</select>
+	<update id="update" parameterType="Member">
+		update member set name=#{name}, email=#{email}, region=#{region}, isHost=#{isHost} where userId=#{userId}
+	</update>
+	<delete id="delete" parameterType="String">
+		delete from member where userId=#{userId}
+	</delete>
+</mapper>

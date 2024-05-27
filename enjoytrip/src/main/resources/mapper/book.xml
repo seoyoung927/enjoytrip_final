@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는 패키지 포함한 mapper(interface) 이름으로 설정한다. -->
+<mapper namespace="com.ssafy.enjoytrip.product.model.dao.BookDao">
+
+    <select id="checkBook" parameterType="bookDto" resultType="int">
+        select count(*)
+        from book
+        where userId = #{userId} and pid = #{pid}
+    </select>
+
+	<select id="getMemo" parameterType="bookDto" resultType="String" >
+        select memo
+        from book
+        where userId = #{userId} and pid = #{pid}
+    </select>
+	
+	<insert id="insert" parameterType="bookDto">
+       	insert into book (userId, pid)
+       	values (#{userId}, #{pid})
+    </insert>
+	
+    <delete id="delete" parameterType="bookDto">
+        delete from book where userId = #{userId} and pid = #{pid}
+    </delete>
+
+	<select id="searchMyBook" parameterType="String" resultType="ProductDto" >
+        select p.pid, ownerId, title, intro, price, people, i.imagePath
+        from product as p inner join (select pid from book where userId = #{userId}) as b
+        on p.pid = b.pid
+        join product_image i
+        on i.pid = p.pid
+        where  i.imageId in (select min(imageId) from product_image group by pid) 
+    	order by p.pid desc
+    </select>
+    <update id="updateBook" parameterType="bookDto">
+    	update book
+    	set memo = #{memo}
+    	where pid = #{pid} and userId = #{userId}
+    </update>
+    
+</mapper>
+

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는  패키지 포함한 mapper(interface)  이름으로 설정 한다.    -->
+<mapper namespace="com.ssafy.enjoytrip.plan.model.dao.PlanDao">
+	
+    <select id="searchAll" parameterType="string" resultType="ResponsePlanDto">
+        select p.pid, p.content_id, p.userId, i.title, d.overview, i.addr1, i.first_image as imagePath
+        from plan p, attraction_info i, attraction_description d
+        where p.userId = #{userId} and p.content_id = i.content_id and p.content_id = d.content_id 
+    	order by p.pid desc
+    </select>
+    <select id="search"		parameterType="RequestSearchPlanDetailDto"	resultType="ResponsePlanDetailDto">
+        select p.pid, p.content_id as contentId, i.title, p.userId,  d.overview, i.addr1
+        from plan p, attraction_info i, attraction_description d
+        where p.pid = #{pid} and p.content_id = i.content_id and p.content_id = d.content_id 
+    </select>
+    <select id="check" parameterType="RequestInsertPlanDto" resultType="int">
+        select count(*)
+        from plan
+        where content_id = #{contentId} and userId=#{userId}
+    </select>
+	<insert id="insert"	parameterType="RequestInsertPlanDto" useGeneratedKeys="true" keyProperty="pid">
+        insert into plan (content_id, userId)
+        values(#{contentId},#{userId})
+    </insert>
+    <delete id="delete" parameterType="int">
+        delete from plan where pid=#{pid}
+    </delete>
+
+</mapper>

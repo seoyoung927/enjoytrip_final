@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는  패키지 포함한 mapper(interface)  이름으로 설정 한다.    -->
+<mapper namespace="com.ssafy.enjoytrip.place.model.dao.PlaceDao">
+	<select id="searchByKeyword" parameterType="RequestPlaceDto" resultType="Place">
+	    SELECT i.content_id, content_type_id, title, addr1, addr2, zipcode, tel, first_image, first_image2, sido_code, gugun_code, latitude, longitude, d.overview
+	    FROM attraction_info i, attraction_description d
+	    <where>
+			i.content_id = d.content_id
+	        <if test="keyword != null and keyword != ''">
+	            AND (title LIKE CONCAT('%', #{keyword}, '%') OR addr1 LIKE CONCAT('%', #{keyword}, '%') OR addr2 LIKE CONCAT('%', #{keyword}, '%'))
+	        </if>
+	       	<if test="sidoCode != 0">
+	            AND sido_code=#{sidoCode}
+	        </if>
+	        <if test="contentTypeId != 0">
+	            AND content_type_id=#{contentTypeId}
+	        </if>
+	    </where>
+</select>
+	<select id="searchByKeywordAndPlan" parameterType="RequestPlaceDto" resultType="Place">
+		SELECT i.content_id, content_type_id, title, addr1, addr2, zipcode, tel, first_image, first_image2, sido_code, gugun_code, latitude, longitude, d.overview, p.pid
+		FROM attraction_info i left join attraction_description d
+		on i.content_id = d.content_id
+		left outer join (select pid, content_id from plan where userId = #{userId}) p
+		on i.content_id = p.content_id
+		<where>
+			i.content_id = d.content_id
+			<if test="keyword != null and keyword != ''">
+				AND (title LIKE CONCAT('%', #{keyword}, '%') OR addr1 LIKE CONCAT('%', #{keyword}, '%') OR addr2 LIKE CONCAT('%', #{keyword}, '%'))
+			</if>
+			<if test="sidoCode != 0">
+				AND sido_code=#{sidoCode}
+			</if>
+			<if test="contentTypeId != 0">
+				AND content_type_id=#{contentTypeId}
+			</if>
+		</where>
+	</select>
+</mapper>
+
+

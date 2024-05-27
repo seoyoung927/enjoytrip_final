@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는 패키지 포함한 mapper(interface) 이름으로 설정한다. -->
+<mapper namespace="com.ssafy.enjoytrip.board.model.dao.BoardDao">
+
+	<sql id="searchCon">
+		1 = 1
+		<if test="word !=null and word !='' ">
+			and title like concat('%',#{word},'%')
+		</if>
+	</sql>
+
+
+    <insert id="insert" parameterType="com.ssafy.enjoytrip.board.model.dto.Board">
+        insert into board (title, content, userId)
+        values(#{title}, #{content}, #{userId})
+    </insert>
+    
+    <select id="search" parameterType="int" resultType="com.ssafy.enjoytrip.board.model.dto.BoardDetailDTO">
+        select boardId, title, userId, createdAt, content, answer
+        from board
+        where boardId = #{boardId}
+    </select>
+
+	<select id="totalCount" resultType="int" parameterType="com.ssafy.enjoytrip.board.model.dto.PageBean">
+        select count(*)
+        from board
+        <where>
+			<if test="word !=null and word !='' ">
+				and title like concat('%',#{word},'%')
+			</if>
+		</where>
+    </select>
+
+    <select id="searchAll" resultType="com.ssafy.enjoytrip.board.model.dto.BoardResponseDTO">
+        select boardId, title, userId, createdAt
+        from board
+        <where>
+			<include refid="searchCon"/>
+		</where>
+		order by boardId desc
+		limit  #{start}, #{interval}
+    </select>
+
+    <update id="update" parameterType="com.ssafy.enjoytrip.board.model.dto.Board">
+        update board
+        set title = #{title},
+            content = #{content},
+            answer = #{answer}
+        where boardId = #{boardId}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        delete from board where boardId = #{boardId}
+    </delete>
+    
+</mapper>
+

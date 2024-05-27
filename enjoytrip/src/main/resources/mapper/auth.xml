@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는 패키지 포함한 mapper(interface) 이름으로 설정한다. -->
+<mapper namespace="com.ssafy.enjoytrip.auth.model.dao.AuthDao">
+
+    <update id="saveRefreshToken" parameterType="map">
+        update auth
+        set token = #{token}
+        where userId = #{userId}
+    </update>
+
+    <select id="getRefreshToken" parameterType="string" resultType="string">
+        select token
+        from auth
+        where userId = #{userId}
+    </select>
+
+    <update id="deleteRefreshToken" parameterType="map">
+        update auth
+        set token = #{refreshToken, jdbcType=VARCHAR}
+        where userId = #{userId}
+    </update>
+
+    <select id="login" parameterType="RequestLoginDto" resultType="string">
+        select userId
+        from auth
+        where userId = #{userId} and password = #{password}
+    </select>
+
+    <delete id="deleteAuth" parameterType="string">
+        delete from auth where userId = #{userId}
+    </delete>
+    <insert id="signup" parameterType="member">
+        insert into auth (userId, password)
+        values (#{userId}, #{password})
+    </insert>
+
+</mapper>
+

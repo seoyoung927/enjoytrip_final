@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는 패키지 포함한 mapper(interface) 이름으로 설정한다. -->
+<mapper namespace="com.ssafy.enjoytrip.product.model.dao.ProductDao">
+
+
+	<insert id="insert" parameterType="productDetailDto" useGeneratedKeys="true" keyProperty="pid">
+       	insert into product (ownerId, title, intro, content, warning, price, people)
+       	values (#{ownerId}, #{title}, #{intro}, #{content}, #{warning}, #{price}, #{people})
+    </insert>
+
+    <select id="search" parameterType="int" resultType="ProductDetailDto">
+        select *
+        from product
+        where pid = #{pid}
+    </select>
+
+	<select id="searchAll" resultType="ProductDto" >
+     select  p.pid, p.ownerId, p.title, p.intro, p.price, p.people, i.imagePath
+        from product p join product_image i on p.pid = i.pid
+        where i.imageId in (select min(imageId) from product_image group by pid)
+        order by p.pid desc
+        </select>
+	
+	<update id="update"  useGeneratedKeys="true" keyProperty="pid" parameterType="ProductDetailDto">
+		update product
+		set title = #{title}, intro = #{intro}, content = #{content}, warning = #{warning}, price = #{price}, people = #{people}
+		where pid=#{pid}
+	</update>
+	
+    <delete id="delete" parameterType="int">
+        delete from product where pid = #{pid}
+    </delete>
+
+	<select id="checkOwner" parameterType="BookDto" resultType="int" >
+        select count(*)
+        from product
+        where pid = #{pid} and ownerId = #{userId};
+    </select>
+    <select id="searchMyProduct" parameterType="String" resultType="ProductDto" >
+         select  p.pid, p.ownerId, p.title, p.intro, p.price, p.people, i.imagePath
+        from product p join product_image i on p.pid = i.pid
+        where  ownerId = #{userId} and i.imageId in (select min(imageId) from product_image group by pid)
+    	order by p.pid desc
+    </select>
+    
+</mapper>
+

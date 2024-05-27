@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는  패키지 포함한 mapper(interface)  이름으로 설정 한다.    -->
+<mapper namespace="com.ssafy.enjoytrip.hotplace.model.dao.HotPlaceDao">
+
+    <insert id="insert"			parameterType="HotPlace">
+        insert into hotplace (userId, title, intro, description, imagePath)
+        values(#{userId},#{title},#{intro},#{description},#{imagePath})
+    </insert>
+    <select id="searchAll" resultType="ResponseHotPlaceDto">
+        select hid, userId, title, intro, imagePath, createdTime
+        from hotplace
+        order by hid desc
+    </select>
+    <select id="search"		parameterType="int"			resultType="ResponseHotPlaceDetailDto">
+        select hid, userId, title, intro, description, imagePath, createdTime
+        from hotplace
+        where hid = #{hid}
+    </select>
+
+
+    <update id="update" parameterType="HotPlace">
+        update hotplace set title=#{title}, intro=#{intro}, description=#{description}, imagePath=#{imagePath}
+        where hid = #{hid}
+    </update>
+    <delete id="delete" parameterType="int">
+        delete from hotplace where hid=#{hid}
+    </delete>
+    <select id="getImagePath" parameterType="RequestUpdateHotPlaceDto" resultType="string">
+    	select imagePath
+    	from hotplace
+    	where hid=#{hid}
+    </select>
+    
+</mapper>

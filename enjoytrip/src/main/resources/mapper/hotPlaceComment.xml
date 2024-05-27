@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace는  패키지 포함한 mapper(interface)  이름으로 설정 한다.    -->
+<mapper namespace="com.ssafy.enjoytrip.hotplace.model.dao.HotPlaceCommentDao">
+
+    <insert id="insert"			parameterType="RequestHotPlaceCommentDto">
+        insert into hotplace_comment (userId, content, hid)
+        values(#{userId},#{content},#{hid})
+    </insert>
+    <update id="update" parameterType="RequestHotPlaceCommentDto">
+        update hotplace_comment set content=#{content}
+        where cid = #{cid}
+    </update>
+    <delete id="delete" parameterType="int">
+        delete from hotplace_comment where cid=#{cid}
+    </delete>
+    <select id="search"		parameterType="int"			resultType="ResponseHotPlaceCommentDto">
+        select cid, userId, content, hid, createdTime
+        from hotplace_comment
+        where hid = #{hid}
+        order by cid desc
+    </select>
+
+
+
+</mapper>

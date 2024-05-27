@@ -1,0 +1,27 @@
+:root {
+  --white: #ffffff;
+  --black: #000000;
+  --primary: #2b96ed;
+  --secondary: #4bc9e5;
+  --secondary-light: #e0f9fe;
+  --red-light: #f8c3bd;
+  --red-medium: #fa5b4a;
+  --yellow-medium: #ffbf00;
+  --blue-light: #d8ecfc;
+  --blue-medium: #2b96ed;
+  --blue-dark: #01457d;
+  --gray-50: #f8f9fa;
+  --gray-60: #f5f6f7;
+  --gray-80: #f1f3f5;
+  --gray-100: #e9ecef;
+  --gray-light: #dee2e6;
+  --gray-300: #ced4da;
+  --gray-medium-light: #adb5bd;
+  --gray-medium: #848c94;
+  --gray-medium: #666d75;
+  --gray-800: #495056;
+  --gray-dark: #212529;
+  --gray-1000: #141719;
+  --border-color: rgba(0, 0, 0, 0.15);
+  font-family: "Noto Sans KR", sans-serif;
+}

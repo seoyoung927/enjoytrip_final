@@ -66,7 +66,7 @@ const openModal = async (card) => {
   selectedCard.memos = card.memos || []; // use existing memos or initialize an empty array
   selectedCard.otherMemos = card.otherComments;
   getComment();
-  getGPT(card.title);
+  //getGPT(card.title);
   place.value = card;
   showModal.value = true;
 };

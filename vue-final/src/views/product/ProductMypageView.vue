@@ -1,6 +1,6 @@
 <script setup>
 import MainHeader from "@/components/common/MainHeader.vue";
-import CardSlider from "@/components/product/CardSlider.vue";
+import CardSlider from "@/components/common/CardSlider.vue";
 import { ref, onMounted } from "vue";
 import { localAuthAxios } from "@/utils/http-commons";
 
@@ -8,37 +8,6 @@ const localAuth = localAuthAxios();
 
 const cards = ref([]);
 const places = ref([]);
-
-import imgSeoul from "@/assets/img/Seoul.jpg";
-import imgDaejeon from "@/assets/img/Daejeon.jpg";
-import imgGangneung from "@/assets/img/Gangneung.jpg";
-import imgJeonju from "@/assets/img/Jeonju.jpg";
-import imgBusan from "@/assets/img/Busan.jpg";
-import imgGyeongju from "@/assets/img/Gyeongju.jpg";
-import imgJeju from "@/assets/img/Jeju.jpg";
-import imgYeosu from "@/assets/img/Yeosu.jpg";
-
-// const cards = [
-//   { id: 1, src: imgSeoul, title: "서울", intro: "밤낮없이 활기찬 글로벌 도시" },
-//   { id: 2, src: imgDaejeon, title: "대전", intro: "과학과 문화의 도시" },
-//   { id: 3, src: imgGangneung, title: "강릉", intro: "바다향기 가득한 여행지" },
-//   { id: 4, src: imgJeonju, title: "전주", intro: "전통과 현대의 조화로움" },
-//   { id: 5, src: imgBusan, title: "부산", intro: "매력적인 해안가와 다양한 맛집이 어울러진 도시" },
-//   { id: 6, src: imgGyeongju, title: "경주", intro: "역사의 숨결이 가득한 도시" },
-//   { id: 7, src: imgJeju, title: "제주", intro: "자연 속의 평화와 아름다움" },
-//   { id: 8, src: imgYeosu, title: "여수", intro: "로맨틱한 일몰이 인상적인 도시" },
-// ];
-
-// const places = [
-//   { id: 1, src: imgSeoul, title: "서울스카이", intro: "밤낮없이 활기찬 글로벌 도시" },
-//   { id: 2, src: imgDaejeon, title: "대전", intro: "과학과 문화의 도시" },
-//   { id: 3, src: imgGangneung, title: "강릉", intro: "바다향기 가득한 여행지" },
-//   { id: 4, src: imgJeonju, title: "전주", intro: "전통과 현대의 조화로움" },
-//   { id: 5, src: imgBusan, title: "부산", intro: "매력적인 해안가와 다양한 맛집이 어울러진 도시" },
-//   { id: 6, src: imgGyeongju, title: "경주", intro: "역사의 숨결이 가득한 도시" },
-//   { id: 7, src: imgJeju, title: "제주", intro: "자연 속의 평화와 아름다움" },
-//   { id: 8, src: imgYeosu, title: "여수", intro: "로맨틱한 일몰이 인상적인 도시" },
-// ];
 
 //mount시에 productId에 해당하는 게시물 정보가져오기
 const getPlans = async () => {
@@ -51,7 +20,7 @@ const getPlans = async () => {
     console.error("Error getPlans data:", error);
   }
 };
-//mount시에 productId에 해당하는 게시물 정보가져오기
+//mount시에 myBook 정보가져오기(예약)
 const getBooks = async () => {
   try {
     const response = await localAuth.get(`/product/myBook`); // 서버에서 데이터 가져오기

@@ -1,6 +1,6 @@
 <script setup>
 import MainHeader from "@/components/common/MainHeader.vue";
-import CardSlider from "@/components/product/CardSlider.vue";
+import CardSlider from "@/components/common/CardSlider.vue";
 import { ref, onMounted } from "vue";
 import { localAuthAxios } from "@/utils/http-commons";
 
